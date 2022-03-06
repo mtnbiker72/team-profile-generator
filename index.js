@@ -8,6 +8,11 @@ const Manager = require("./lib/Manager");
 
 // Define an empty array that will hold all the employees
 const employees = [];
+const badges = {
+    "Engineer": "mug-hot-solid.svg",
+    "Manager": "mug-hot-solid.svg",
+    "Intern": "mug-hot-solid.svg"
+     }
 
 // Function to add a new employee using Inquirer package
 function addTeamMember() {
@@ -107,61 +112,76 @@ function addMore() {
 // This function creates the HTML file using data that was input
 function updateHtml() {
     let htmlString = `
-<!DOCTYPE html>
-<html lang="en-us">
-
-<head>
-    <meta charset="UTF-8" />
-    <link rel="stylesheet" href="./assets/css/style.css">
-    <title>Horiseon</title>
-</head>
-<body> 
+    <!DOCTYPE html>
+    <html lang="en">
+    
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta name="Description" content="Enter your description here" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="./assets/css/style.css">
+        <title>Bootstrap Components</title>
+    </head>
+    <body>
+    <div class="jumbotron text-center jumbotron-fluid">
+        <div class="container">
+            <h1 class="display-4">My Team</h1>
+        </div>
+    </div>
+    <div class="row">
 `
 
     employees.forEach(employee => {
         htmlString += `
-    <div> ${employee.employeeName} </div>
-    <div> ID: ${employee.id} </div>
-    <div> Email: ${employee.email} </div>
-    `
-        console.log(employee.role);
+        <div class="col-sm-6">
+        <div class="card" style="width: 16rem;">
+        <div class="card-header">
+            ${employee.employeeName}
+            <br>
+            <img src="./assets/images/${badges[employee.role]}">;
+            ${employee.role} 
+        </div>
+        <ul class="list-group ">
+            <li class="list-group-item">ID: ${employee.id}</li>
+            <li class="list-group-item">Email: ${employee.email}</li>
+            `
         switch (employee.role) {
             case "Manager":
                 htmlString += `
-        <div> Office: ${employee.office} </div> 
-        <br>
-        `
+            <li class="list-group-item">Office: ${employee.office} </li>
+            `
                 break;
 
             case "Intern":
                 htmlString += `
-        <div> School: ${employee.school} </div> 
-        <br>
-        `
+            <li class="list-group-item">School: ${employee.school} </li>
+            `
                 break;
 
             case "Engineer":
                 htmlString += `
-        <div> Github: ${employee.github} </div> 
-        <br>
-        `
+            <li class="list-group-item">Github: <a href=https://github.com/${employee.github} target="_blank"> ${employee.github} </a></li>
+            `
                 break;
 
         }
         htmlString += `
-    
-    `
+             </ul>
+          </div>
+        </div> `
+
     })
-
     htmlString += `
-</body>
+    </div >
+    </body >
 
-</html>
-`
+    </html> `
 
     writeToFile("test.html", htmlString);
+    
 }
-
 
 // Function to write the html file
 function writeToFile(fileName, answers) {
