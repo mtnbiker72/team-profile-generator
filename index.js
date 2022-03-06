@@ -9,13 +9,13 @@ const Manager = require("./lib/Manager");
 // Define an empty array that will hold all the employees
 const employees = [];
 const badges = {
-    "Engineer": "mug-hot-solid.svg",
+    "Engineer": "glasses-solid.svg",
     "Manager": "mug-hot-solid.svg",
-    "Intern": "mug-hot-solid.svg"
+    "Intern": "graduation-cap-solid.svg"
      }
 
 // Function to add a new employee using Inquirer package
-function addTeamMember() {
+function addTeamMember(choices) {
     inquirer.prompt([
         {
             type: 'input',
@@ -33,11 +33,7 @@ function addTeamMember() {
             type: "list",
             name: "role",
             message: "Select employee's role",
-            choices: [
-                "Manager",
-                "Engineer",
-                "Intern"
-            ]
+            choices: choices 
         },
 
         {
@@ -71,11 +67,11 @@ function addTeamMember() {
         .then(data => {
             let newEmployee;
             if (data.role === "Engineer") {
-                newEmployee = new Engineer(data.employeeName, data.role, data.id, data.email, data.github);
+                newEmployee = new Engineer(data.employeeName, data.id, data.email, data.github);
             } else if (data.role === "Intern") {
-                newEmployee = new Intern(data.employeeName, data.role, data.id, data.email, data.school);
+                newEmployee = new Intern(data.employeeName, data.id, data.email, data.school);
             } else {
-                newEmployee = new Manager(data.employeeName, data.role, data.id, data.email, data.office);
+                newEmployee = new Manager(data.employeeName, data.id, data.email, data.office);
             }
 
             employees.push(newEmployee);
@@ -84,7 +80,7 @@ function addTeamMember() {
         })
 }
 
-addTeamMember()
+addTeamMember(["Manager"])
 
 // See if the user would like to add more employees
 // If so, call addTeamMember otherwise print the object to console
@@ -101,7 +97,7 @@ function addMore() {
         }])
         .then((response) => {
             if (response.addMoreEmployees === 'yes') {
-                addTeamMember();
+                addTeamMember(["Engineer", "Intern"]);
             } else {
                 console.log(JSON.stringify(employees));
                 updateHtml();
@@ -121,7 +117,7 @@ function updateHtml() {
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <meta name="Description" content="Enter your description here" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
-        <link rel="stylesheet" href="./assets/css/style.css">
+        <link rel="stylesheet" href="./style.css">
         <title>Bootstrap Components</title>
     </head>
     <body>
@@ -138,31 +134,31 @@ function updateHtml() {
         <div class="col-sm-6">
         <div class="card" style="width: 16rem;">
         <div class="card-header">
-            ${employee.employeeName}
+            ${employee.getName()}
             <br>
-            <img src="./assets/images/${badges[employee.role]}">;
-            ${employee.role} 
+            <img src="../src/images/${badges[employee.getRole()]}">
+            ${employee.getRole()} 
         </div>
         <ul class="list-group ">
-            <li class="list-group-item">ID: ${employee.id}</li>
-            <li class="list-group-item">Email: ${employee.email}</li>
+            <li class="list-group-item">ID: ${employee.getId()}</li>
+            <li class="list-group-item">Email: ${employee.getEmail()}</li>
             `
-        switch (employee.role) {
+        switch (employee.getRole()) {
             case "Manager":
                 htmlString += `
-            <li class="list-group-item">Office: ${employee.office} </li>
+            <li class="list-group-item">Office: ${employee.getOfficeNumber()} </li>
             `
                 break;
 
             case "Intern":
                 htmlString += `
-            <li class="list-group-item">School: ${employee.school} </li>
+            <li class="list-group-item">School: ${employee.getSchool()} </li>
             `
                 break;
 
             case "Engineer":
                 htmlString += `
-            <li class="list-group-item">Github: <a href=https://github.com/${employee.github} target="_blank"> ${employee.github} </a></li>
+            <li class="list-group-item">Github: <a href=https://github.com/${employee.getGithub()} target="_blank"> ${employee.getGithub()} </a></li>
             `
                 break;
 
@@ -179,7 +175,7 @@ function updateHtml() {
 
     </html> `
 
-    writeToFile("test.html", htmlString);
+    writeToFile("dist/index.html", htmlString);
     
 }
 
