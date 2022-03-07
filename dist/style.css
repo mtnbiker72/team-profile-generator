@@ -1,25 +1,39 @@
+.row {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+}
 .jumbotron {
-    background-color: red;
+    background-color: darkblue;
     color: white;
 }
 
 .card-header {
-    background-color: blue;
-    color: white;
-    font-size: 20px;
+    background-color: lightgoldenrodyellow;
+    color: black;
+    font-size: 24px;
     font-weight: bold;
 }
 
 .card {
     margin: 0 auto;
     float: none;
-    margin-bottom: 10px;
+    margin-bottom: 40px;
+    border: 3px solid black;
+    border-radius: 5px;
+    box-shadow: 10px 5px;
+    max-width: 20rem;
 }
 
 img {
-    height: 16px;
-    width: 16px;
-    filter: invert(1);
+    height: 20px;
+    width: 20px;
+    font-style: italic;
     position: relative;
     top: -2px;
+}
+
+.padding {
+    padding-right: 0;
+    padding-left: 0;
 }

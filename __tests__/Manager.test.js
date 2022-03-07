@@ -8,31 +8,31 @@ describe("Manager", () => {
         });
     });
 
-    describe("Initialization", () => {
+    describe("Verify getName function", () => {
         it("should verify the employee name", () => {
             const newEmployee = new Manager("name123", 13, "name123@email.com", "office12");
-            expect(newEmployee.getName()).toEqual("name123");
+            expect(newEmployee.getName()).toMatch("name123");
         });
     });
 
-    describe("Initialization", () => {
+    describe("Verify getEmail function", () => {
         it("should verify the email address", () => {
             const newEmployee = new Manager("name123", 13, "name123@email.com", "office12");
-            expect(newEmployee.getEmail()).toEqual("name123@email.com");
+            expect(newEmployee.getEmail()).toMatch("name123@email.com");
         });
     });
 
-    describe("Initialization", () => {
+    describe("Verify getOfficeNumber function", () => {
         it("should verify the office number", () => {
-            const newEmployee = new Manager("name123", 13, "name123@email.com", "office12");
-            expect(newEmployee.getOfficeNumber()).toEqual("office12");
+            const newEmployee = new Manager("name123", 13, "name123@email.com", 12);
+            expect(newEmployee.getOfficeNumber()).toEqual(12);
         });
     });
 
-    describe("Initialization", () => {
+    describe("Verify getRole function", () => {
         it("should verify the role of the employee", () => {
             const newEmployee = new Manager("name123", 13, "name123@email.com", "office12");
-            expect(newEmployee.getRole()).toEqual("Manager");
+            expect(newEmployee.getRole()).toMatch("Manager");
         });
     });
 })

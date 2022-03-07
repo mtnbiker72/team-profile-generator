@@ -8,6 +8,7 @@ const Manager = require("./lib/Manager");
 
 // Define an empty array that will hold all the employees
 const employees = [];
+// Define the different badges we'll use next to the type of employee
 const badges = {
     "Engineer": "glasses-solid.svg",
     "Manager": "mug-hot-solid.svg",
@@ -15,18 +16,31 @@ const badges = {
      }
 
 // Function to add a new employee using Inquirer package
+// Validation is done on most of the answers
 function addTeamMember(choices) {
     inquirer.prompt([
         {
             type: 'input',
             name: 'employeeName',
             message: 'Please enter the employee name:',
+            validate(answer) {
+                if(!answer) {
+                    return "Please enter a name!";
+                }
+                return true;
+            }
         },
 
         {
             type: 'input',
             name: 'id',
             message: 'Please enter the employee\'s ID:',
+            validate(answer) {
+                if(!answer) {
+                    return "Please enter the employee ID!";
+                }
+                return true;
+            }
         },
 
         {
@@ -40,6 +54,13 @@ function addTeamMember(choices) {
             type: 'input',
             name: 'email',
             message: 'Please enter the employee\'s email:',
+            validate(answer) {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+                if(!emailRegex.test(answer)) {
+                    return "Please provide a valid email address!"
+                }
+                return true
+            }
         },
 
         {
@@ -47,6 +68,12 @@ function addTeamMember(choices) {
             name: 'github',
             message: "Please enter the employee's github username:",
             when: (input) => input.role === "Engineer",
+            validate(answer) {
+                if(!answer) {
+                    return "Please enter the Github Username!";
+                }
+                return true;
+            }
         },
 
         {
@@ -54,6 +81,12 @@ function addTeamMember(choices) {
             name: 'school',
             message: "Please enter the school name:",
             when: (input) => input.role === "Intern",
+            validate(answer) {
+                if(!answer) {
+                    return "Please enter the school!";
+                }
+                return true;
+            }
         },
 
         {
@@ -61,6 +94,12 @@ function addTeamMember(choices) {
             name: 'office',
             message: "Please enter your office number::",
             when: (input) => input.role === "Manager",
+            validate(answer) {
+                if(!answer) {
+                    return "Please enter your office number!";
+                }
+                return true;
+            }
         },
     ])
 
@@ -80,10 +119,12 @@ function addTeamMember(choices) {
         })
 }
 
+// The first team member to be added is the manager, so call the function and return Manager as choices
 addTeamMember(["Manager"])
 
 // See if the user would like to add more employees
 // If so, call addTeamMember otherwise print the object to console
+// Once this function is called, only Intern and Engineer will be available to choose from
 function addMore() {
     inquirer.prompt([
         {
@@ -99,7 +140,6 @@ function addMore() {
             if (response.addMoreEmployees === 'yes') {
                 addTeamMember(["Engineer", "Intern"]);
             } else {
-                console.log(JSON.stringify(employees));
                 updateHtml();
             }
         })
@@ -126,23 +166,25 @@ function updateHtml() {
             <h1 class="display-4">My Team</h1>
         </div>
     </div>
-    <div class="row">
+    <div class="row justify-content-center">
 `
 
+    // Go through each employee in the object and create a new card 
     employees.forEach(employee => {
         htmlString += `
-        <div class="col-sm-6">
-        <div class="card" style="width: 16rem;">
+        <div class="col-sm-4 no-gutters">
+        <div class="card" style="width: 18rem;">
         <div class="card-header">
-            ${employee.getName()}
+            <span style="font-style:italic">${employee.getName()}</span>
             <br>
-            <img src="../src/images/${badges[employee.getRole()]}">
             ${employee.getRole()} 
+            <img src="../src/images/${badges[employee.getRole()]}">
         </div>
         <ul class="list-group ">
             <li class="list-group-item">ID: ${employee.getId()}</li>
-            <li class="list-group-item">Email: ${employee.getEmail()}</li>
+            <li class="list-group-item">Email: <a href=mailto:${employee.getEmail()}> ${employee.getEmail()}</a></li>
             `
+        // Determine employee type so we can display the correct value
         switch (employee.getRole()) {
             case "Manager":
                 htmlString += `

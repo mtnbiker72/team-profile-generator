@@ -8,31 +8,31 @@ describe("Intern", () => {
         });
     });
 
-    describe("Initialization", () => {
+    describe("Verify getName function", () => {
         it("should verify the employee name", () => {
             const newEmployee = new Intern("name123", 13, "name123@email.com", "life");
-            expect(newEmployee.getName()).toEqual("name123");
+            expect(newEmployee.getName()).toMatch("name123");
         });
     });
 
-    describe("Initialization", () => {
+    describe("Verify getEmail function", () => {
         it("should verify the email address", () => {
             const newEmployee = new Intern("name123", 13, "name123@email.com", "life");
-            expect(newEmployee.getEmail()).toEqual("name123@email.com");
+            expect(newEmployee.getEmail()).toMatch("name123@email.com");
         });
     });
 
-    describe("Initialization", () => {
-        it("should verify the office number", () => {
+    describe("Verify getSchool function", () => {
+        it("should verify the school input", () => {
             const newEmployee = new Intern("name123", 13, "name123@email.com", "life");
-            expect(newEmployee.getSchool()).toEqual("life");
+            expect(newEmployee.getSchool()).toMatch("life");
         });
     });
 
-    describe("Initialization", () => {
+    describe("erify getRole function", () => {
         it("should verify the role of the employee", () => {
             const newEmployee = new Intern("name123", 13, "name123@email.com", "life");
-            expect(newEmployee.getRole()).toEqual("Intern");
+            expect(newEmployee.getRole()).toMatch("Intern");
         });
     });
 })
