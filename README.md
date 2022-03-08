@@ -1,7 +1,11 @@
 # HOMEWORK #10 - Team Profile Generator
 The team-profile-generator code can be accessed at:
 
-https://github.com/mtnbiker72/team-profile-generator
+https://github.com/mtnbiker72/team-profile-generator  
+
+The video to show how this app works can be found here:
+
+https://drive.google.com/file/d/1EYmxhub9K8x5Mhr84eRhAB5dCfZM1TVW/view
 
 ## Required Modules:
 * Jest for testing
