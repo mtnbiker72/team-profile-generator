@@ -13,7 +13,7 @@ const badges = {
     "Engineer": "glasses-solid.svg",
     "Manager": "mug-hot-solid.svg",
     "Intern": "graduation-cap-solid.svg"
-     }
+}
 
 // Function to add a new employee using Inquirer package
 // Validation is done on most of the answers
@@ -24,7 +24,7 @@ function addTeamMember(choices) {
             name: 'employeeName',
             message: 'Please enter the employee name:',
             validate(answer) {
-                if(!answer) {
+                if (!answer) {
                     return "Please enter a name!";
                 }
                 return true;
@@ -36,7 +36,7 @@ function addTeamMember(choices) {
             name: 'id',
             message: 'Please enter the employee\'s ID:',
             validate(answer) {
-                if(!answer) {
+                if (!answer) {
                     return "Please enter the employee ID!";
                 }
                 return true;
@@ -47,7 +47,7 @@ function addTeamMember(choices) {
             type: "list",
             name: "role",
             message: "Select employee's role",
-            choices: choices 
+            choices: choices
         },
 
         {
@@ -56,7 +56,7 @@ function addTeamMember(choices) {
             message: 'Please enter the employee\'s email:',
             validate(answer) {
                 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-                if(!emailRegex.test(answer)) {
+                if (!emailRegex.test(answer)) {
                     return "Please provide a valid email address!"
                 }
                 return true
@@ -69,7 +69,7 @@ function addTeamMember(choices) {
             message: "Please enter the employee's github username:",
             when: (input) => input.role === "Engineer",
             validate(answer) {
-                if(!answer) {
+                if (!answer) {
                     return "Please enter the Github Username!";
                 }
                 return true;
@@ -82,7 +82,7 @@ function addTeamMember(choices) {
             message: "Please enter the school name:",
             when: (input) => input.role === "Intern",
             validate(answer) {
-                if(!answer) {
+                if (!answer) {
                     return "Please enter the school!";
                 }
                 return true;
@@ -95,7 +95,7 @@ function addTeamMember(choices) {
             message: "Please enter your office number::",
             when: (input) => input.role === "Manager",
             validate(answer) {
-                if(!answer) {
+                if (!answer) {
                     return "Please enter your office number!";
                 }
                 return true;
@@ -124,7 +124,7 @@ addTeamMember(["Manager"])
 
 // See if the user would like to add more employees
 // If so, call addTeamMember otherwise print the object to console
-// Once this function is called, only Intern and Engineer will be available to choose from
+// Once this function is called once, only Intern and Engineer will be available to choose from
 function addMore() {
     inquirer.prompt([
         {
@@ -172,7 +172,7 @@ function updateHtml() {
     // Go through each employee in the object and create a new card 
     employees.forEach(employee => {
         htmlString += `
-        <div class="col-sm-4 no-gutters">
+        <div class="col-lg-4 col-md-6 col-sm-12  no-gutters">
         <div class="card" style="width: 18rem;">
         <div class="card-header">
             <span style="font-style:italic">${employee.getName()}</span>
@@ -218,7 +218,7 @@ function updateHtml() {
     </html> `
 
     writeToFile("dist/index.html", htmlString);
-    
+
 }
 
 // Function to write the html file
